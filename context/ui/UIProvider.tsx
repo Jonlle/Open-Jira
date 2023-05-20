@@ -1,20 +1,18 @@
-import { FC, PropsWithChildren, ReactNode, useReducer } from 'react';
+import { FC, PropsWithChildren, useReducer } from 'react';
 import { UIContext, uiReducer } from '.';
 
 export interface UIState {
   isSideMenuOpen: boolean;
+  isAddingEntry: boolean;
 }
 
 const UI_INITIAL_STATE: UIState = {
   isSideMenuOpen: false,
+  isAddingEntry: false,
 };
 
 export const UIPovider: FC<PropsWithChildren> = ({ children }) => {
   const [state, dispatch] = useReducer(uiReducer, UI_INITIAL_STATE);
-
-  const toggleSideMenu = () => {
-    dispatch({ type: 'UI_TOGGLE_SIDE_MENU' });
-  };
 
   const openSideMenu = () => {
     dispatch({ type: 'UI_OPEN_SIDE_MENU' });
@@ -24,14 +22,12 @@ export const UIPovider: FC<PropsWithChildren> = ({ children }) => {
     dispatch({ type: 'UI_CLOSE_SIDE_MENU' });
   };
 
+  const setAddingEntry = (value: boolean) => {
+    dispatch({ type: 'UI_SET_ADDING_ENTRY', payload: value });
+  };
+
   return (
-    <UIContext.Provider
-      value={{
-        ...state,
-        toggleSideMenu,
-        openSideMenu,
-        closeSideMenu,
-      }}>
+    <UIContext.Provider value={{ ...state, openSideMenu, closeSideMenu, setAddingEntry }}>
       {children}
     </UIContext.Provider>
   );
