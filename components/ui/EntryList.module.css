@@ -1,0 +1,6 @@
+.dragging {
+  background-color: rgba(100, 100, 100, 0.4);
+  border-radius: 10px;
+  border: 2px solid #fff;
+  transition: 'all .3s';
+}
