@@ -8,11 +8,7 @@ export interface EntriesState {
 }
 
 const Entries_INITIAL_STATE: EntriesState = {
-  entries: [
-    { _id: uuidv4(), description: 'Finalizada: Tarea 1', createAt: Date.now() - 100000, status: 'finished' },
-    { _id: uuidv4(), description: 'En Progreso: Tarea 2', createAt: Date.now() - 1000000, status: 'in-progress' },
-    { _id: uuidv4(), description: 'Pendiente: Tarea 3', createAt: Date.now(), status: 'pending' },
-  ],
+  entries: [],
 };
 
 export const EntriesPovider: FC<PropsWithChildren> = ({ children }) => {
