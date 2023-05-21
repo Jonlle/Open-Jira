@@ -1,7 +1,8 @@
-import { FC, PropsWithChildren, useContext, useReducer } from 'react';
+import { FC, PropsWithChildren, useContext, useEffect, useReducer } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { EntriesContext, entriesReducer } from '.';
 import { Entry } from '@/interfaces';
+import { entriesApi } from '@/apis';
 
 export interface EntriesState {
   entries: Entry[];
@@ -29,5 +30,18 @@ export const EntriesPovider: FC<PropsWithChildren> = ({ children }) => {
     dispatch({ type: 'ENTRY_UPDATE_ENTRY', payload: entry });
   };
 
-  return <EntriesContext.Provider value={{ ...state, addNewEntry, updateEntry }}>{children}</EntriesContext.Provider>;
+  const refreshEntries = async () => {
+    const { data } = await entriesApi.get<Entry[]>('/entries');
+    dispatch({ type: 'ENTRY_REFRESH_DATA', payload: data });
+  };
+
+  useEffect(() => {
+    refreshEntries();
+  }, []);
+
+  return (
+    <EntriesContext.Provider value={{ ...state, addNewEntry, updateEntry, refreshEntries }}>
+      {children}
+    </EntriesContext.Provider>
+  );
 };
