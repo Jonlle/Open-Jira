@@ -20,8 +20,14 @@ export const EntriesPovider: FC<PropsWithChildren> = ({ children }) => {
     dispatch({ type: 'ENTRY_ADD_ENTRY', payload: data });
   };
 
-  const updateEntry = (entry: Entry) => {
-    dispatch({ type: 'ENTRY_UPDATE_ENTRY', payload: entry });
+  const updateEntry = async (entry: Entry) => {
+    const { _id, description, status } = entry;
+
+    try {
+      const { data } = await entriesApi.put<Entry>(`/entries/${_id}`, { description, status });
+
+      dispatch({ type: 'ENTRY_UPDATE_ENTRY', payload: data });
+    } catch (error) {}
   };
 
   const refreshEntries = async () => {

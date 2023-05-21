@@ -14,7 +14,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
   switch (req.method) {
     case 'GET':
       return getEntry(req, res);
-    case 'POST':
+    case 'PUT':
       return updateEntry(req, res);
 
     default:
@@ -33,18 +33,17 @@ const getEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 const updateEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const { id } = req.query;
 
+  await db.connect();
+  const entry = await Entry.findById(id);
+
+  if (!entry) {
+    await db.disconnect();
+    return res.status(404).json({ message: 'No se encontro ningun registro con ese ID: ' + id });
+  }
+
+  const { description = entry.description, status = entry.status } = req.body;
+
   try {
-    await db.connect();
-
-    const entry = await Entry.findById(id);
-
-    if (!entry) {
-      await db.disconnect();
-      return res.status(404).json({ message: 'No se encontro ningun registro con ese ID: ' + id });
-    }
-
-    const { description = entry.description, status = entry.status } = req.body;
-
     const updatedEntry = await Entry.findByIdAndUpdate(id, { description, status }, { runValidators: true, new: true });
     await db.disconnect();
 
@@ -53,6 +52,6 @@ const updateEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     await db.disconnect();
     console.log(error);
 
-    res.status(500).json({ message: 'Algo salio mal, revisar consola del servidor' });
+    res.status(400).json({ message: 'Bad request, revisar consola del servidor' });
   }
 };
