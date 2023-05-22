@@ -14,12 +14,6 @@ docker-compose up -d
 mongodb://localhost:27017/entriesdb
 ```
 
-## Llenar la BD con informacion de prueba (seed)
-
-```
-http://localhost:3030/api/seed
-```
-
 ## Instalación
 
 ```
@@ -32,6 +26,14 @@ Luego correr el proyecto
 
 ```
 yarn dev
+```
+
+## Llenar la BD con informacion de prueba (seed)
+
+```
+
+http://localhost:3030/api/seed
+
 ```
 
 ## Ejecución en modo producción
