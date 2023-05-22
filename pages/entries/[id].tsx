@@ -29,14 +29,12 @@ interface Props {
 }
 
 export const EntryPage: FC<Props> = ({ entry }) => {
-  const { updateEntry } = useContext(EntriesContext);
+  const { updateEntry, deleteEntry } = useContext(EntriesContext);
   const [inputValue, setInputValue] = useState(entry.description);
   const [status, setStatus] = useState<EntryStatus>(entry.status);
   const [touched, setTouched] = useState(false);
 
   const isNotValid = useMemo(() => !inputValue.length && touched, [inputValue, touched]);
-  // const { addNewEntry } = useContext(EntriesContext);
-  // const { isAddingEntry, setAddingEntry } = useContext(UIContext);
 
   const onTextFieldChange = (event: ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
@@ -56,6 +54,10 @@ export const EntryPage: FC<Props> = ({ entry }) => {
     };
 
     updateEntry(updatedEntry, true);
+  };
+
+  const onDelete = () => {
+    deleteEntry(entry._id);
   };
 
   return (
@@ -124,7 +126,8 @@ export const EntryPage: FC<Props> = ({ entry }) => {
           bottom: 16,
           right: 16,
           backgroundColor: 'error.main',
-        }}>
+        }}
+        onClick={() => onDelete()}>
         <Delete />
       </IconButton>
     </Layout>

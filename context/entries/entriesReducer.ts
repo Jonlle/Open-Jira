@@ -4,6 +4,7 @@ import { Entry } from '@/interfaces';
 type EntriesActionType =
   | { type: 'ENTRY_ADD_ENTRY'; payload: Entry }
   | { type: 'ENTRY_UPDATE_ENTRY'; payload: Entry }
+  | { type: 'ENTRY_DELETE_ENTRY'; payload: string }
   | { type: 'ENTRY_REFRESH_DATA'; payload: Entry[] };
 
 export const entriesReducer = (state: EntriesState, action: EntriesActionType): EntriesState => {
@@ -23,6 +24,11 @@ export const entriesReducer = (state: EntriesState, action: EntriesActionType): 
           }
           return entry;
         }),
+      };
+    case 'ENTRY_DELETE_ENTRY':
+      return {
+        ...state,
+        entries: state.entries.filter((entry) => entry._id !== action.payload),
       };
     case 'ENTRY_REFRESH_DATA':
       return {
