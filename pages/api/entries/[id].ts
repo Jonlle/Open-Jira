@@ -7,6 +7,7 @@ type Data = { message: string } | IEntry;
 
 export default function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
   const { id } = req.query;
+
   if (!mongoose.isValidObjectId(id)) {
     return res.status(400).json({ message: 'El id no es valido' + id });
   }
@@ -23,9 +24,15 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
 }
 
 const getEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
+  const { id } = req.query;
+
   await db.connect();
-  const entry = await Entry.findById(req.query.id);
+  const entry = await Entry.findById(id);
   await db.disconnect();
+
+  if (!entry) {
+    return res.status(404).json({ message: 'No se encontro ningun registro con ese ID: ' + id });
+  }
 
   res.status(200).json(entry!);
 };
