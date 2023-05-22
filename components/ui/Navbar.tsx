@@ -19,21 +19,19 @@ export const Navbar = () => {
           onClick={openSideMenu}>
           <Menu />
         </IconButton>
-        <NextLink
-          href='/'
-          passHref>
-          <Link
-          // underline='none'
-          // color='MenuText'
-          >
-            <Typography
-              variant='h6'
-              component='div'
-              sx={{ flexGrow: 1 }}>
-              OpenJira
-            </Typography>
-          </Link>
-        </NextLink>
+        <Link
+          href={'/'}
+          component={NextLink}
+          sx={{
+            textDecoration: 'none',
+            color: 'text.primary',
+          }}>
+          <Typography
+            variant='h6'
+            noWrap>
+            OpenJira
+          </Typography>
+        </Link>
       </Toolbar>
     </AppBar>
   );

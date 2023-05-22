@@ -17,6 +17,11 @@ export const lightTheme = createTheme({
     error: {
       main: '#f44336',
     },
+    text: {
+      primary: '#212121',
+      secondary: '#757575',
+      disabled: '#bdbdbd',
+    },
   },
 
   components: {},

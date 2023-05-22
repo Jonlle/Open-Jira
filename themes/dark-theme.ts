@@ -15,6 +15,11 @@ export const darkTheme = createTheme({
     error: {
       main: '#f44336',
     },
+    text: {
+      primary: '#ffffff',
+      secondary: '#ffffff',
+      disabled: '#ffffff',
+    },
   },
   components: {
     // MuiAppBar: {
