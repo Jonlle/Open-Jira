@@ -21,7 +21,7 @@ export const EntryCard: FC<Props> = ({ entry }) => {
   };
 
   const handleClick = () => {
-    router.push(`/entry/${entry._id}`);
+    router.push(`/entries/${entry._id}`);
   };
 
   return (
