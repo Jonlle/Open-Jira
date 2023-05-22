@@ -1,19 +1,5 @@
 # Next.js OpenJira App
 
-Para correr localmente, se necesita la base de datos
-
-```
-docker-compose up -d
-```
-
-- El -d, significa **detached**
-
-- MongoDB URL Local:
-
-```
-mongodb://localhost:27017/entriesdb
-```
-
 ## Instalación
 
 ```
@@ -28,10 +14,23 @@ Luego correr el proyecto
 yarn dev
 ```
 
+Para correr localmente, se necesita la base de datos
+
+```
+docker-compose up -d
+```
+
+- El -d, significa **detached**
+
+- MongoDB URL Local:
+
+```
+mongodb://localhost:27017/entriesdb
+```
+
 ## Llenar la BD con informacion de prueba (seed)
 
 ```
-
 http://localhost:3030/api/seed
 
 ```
